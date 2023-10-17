@@ -9,7 +9,7 @@ export const useProductsStore = defineStore('products', () => {
     const db = useFirestore();
     const storage = useFirebaseStorage();
 
-    const selectCategory=ref(1);
+    const selectCategory = ref(1);
     const categories = [
         { id: 1, name: 'Sudabderas' },
         { id: 2, name: 'Tenis' },
@@ -66,7 +66,9 @@ export const useProductsStore = defineStore('products', () => {
     const noResults = computed(() => productsCollection.value.length === 0)
 
     const filteredProducts = computed(() => {
-        return productsCollection.value.filter(product => product.category === selectCategory.value)
+        return productsCollection.value
+            .filter(product => product.category === selectCategory.value)
+            .filter(product => product.availability > 0)
     })
 
     return {
